@@ -70,5 +70,6 @@ C:\Dev\GitHub\VaultRMSTrainingTracker\BackEnd\VRMSTT\VRMSTT.Api\bin\System.Web.H
 C:\Dev\GitHub\VaultRMSTrainingTracker\BackEnd\VRMSTT\VRMSTT.Api\obj\Debug\VRMSTT.Api.csprojResolveAssemblyReference.cache
 C:\Dev\GitHub\VaultRMSTrainingTracker\BackEnd\VRMSTT\VRMSTT.Api\obj\Debug\VRMSTT.Api.dll
 C:\Dev\GitHub\VaultRMSTrainingTracker\BackEnd\VRMSTT\VRMSTT.Api\obj\Debug\VRMSTT.Api.pdb
-C:\Dev\GitHub\VaultRMSTrainingTracker\BackEnd\VRMSTT\VRMSTT.Api\obj\Debug\VRMSTT.Api.Migrations.InitialMigration.resources
 C:\Dev\GitHub\VaultRMSTrainingTracker\BackEnd\VRMSTT\VRMSTT.Api\obj\Debug\VRMSTT.Api.csproj.GenerateResource.Cache
+C:\Dev\GitHub\VaultRMSTrainingTracker\BackEnd\VRMSTT\VRMSTT.Api\obj\Debug\VRMSTT.Api.Migrations.AddedDepartmentInfoToRegistration.resources
+C:\Dev\GitHub\VaultRMSTrainingTracker\BackEnd\VRMSTT\VRMSTT.Api\obj\Debug\VRMSTT.Api.Migrations.AddedCreatedDateForModels.resources

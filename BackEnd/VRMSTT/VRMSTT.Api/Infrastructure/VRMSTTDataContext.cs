@@ -27,17 +27,15 @@ namespace VRMSTT.Api.Infrastructure
             modelBuilder.Entity<Department>()
                         .HasMany(d => d.Users)
                         .WithRequired(u => u.Department)
-                        .HasForeignKey(u => u.DepartmentId)
-                        .WillCascadeOnDelete(false);
+                        .HasForeignKey(u => u.DepartmentId);
+                        
 
             // 1 User has many Enrollments
             modelBuilder.Entity<User>()
                         .HasMany(u => u.Enrollments)
                         .WithRequired(e => e.User)
-                        .HasForeignKey(e => e.UserId)
-                        .WillCascadeOnDelete(false);
-
-
+                        .HasForeignKey(e => e.UserId);
+                        
             // 1 User has many Notifications
             modelBuilder.Entity<User>()
                         .HasMany(u => u.Notifications)
@@ -53,16 +51,16 @@ namespace VRMSTT.Api.Infrastructure
             // 1 User has many CREATED Courses
             modelBuilder.Entity<User>()
                         .HasMany(u => u.Courses)
-                        .WithRequired(c => c.User)
-                        .HasForeignKey(c => c.UserId)
-                        .WillCascadeOnDelete(false);
+                        .WithOptional(c => c.User)
+                        .HasForeignKey(c => c.UserId);
+
 
             // 1 Course has many Enrollments
             modelBuilder.Entity<Course>()
                         .HasMany(c => c.Enrollments)
                         .WithRequired(e => e.Course)
-                        .HasForeignKey(e => e.CourseId)
-                        .WillCascadeOnDelete(false);
+                        .HasForeignKey(e => e.CourseId);
+                        
 
             // 1 Certificate has many CertItems
             modelBuilder.Entity<Certificate>()
@@ -70,11 +68,16 @@ namespace VRMSTT.Api.Infrastructure
                         .WithOptional(ci => ci.Certificate)
                         .HasForeignKey(ci => ci.CertificateId);
 
+            // 1 Primary Job Title can have Many Users
+            modelBuilder.Entity<PrimaryJobTitle>()
+                        .HasMany(j => j.Users)
+                        .WithOptional(u => u.PrimaryJobTitle)
+                        .HasForeignKey(u => u.PrimaryJobTitleId);
+
             //Compound Key
             //enrollment => many users + many courses
             modelBuilder.Entity<Enrollment>()
-                        .HasKey(e => new { e.UserId, e.CourseId })
-                        .WillCascadeOnDelete(false);
+                        .HasKey(e => new { e.UserId, e.CourseId });
 
             //Kicks back to base model builder after connecting relations
             base.OnModelCreating(modelBuilder);

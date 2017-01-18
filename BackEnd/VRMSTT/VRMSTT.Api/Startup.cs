@@ -1,6 +1,9 @@
 ﻿using Microsoft.Owin;
+using Microsoft.Owin.Security.OAuth;
 using Owin;
+using System;
 using System.Web.Http;
+using VRMSTT.Api.Providers;
 
 [assembly: OwinStartup(typeof(VRMSTT.Api.Startup))]
 namespace VRMSTT.Api
@@ -13,6 +16,21 @@ namespace VRMSTT.Api
             WebApiConfig.Register(config);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
+        }
+        public void ConfigureOAuth(IAppBuilder app)
+        {
+            var authorizationOptions = new OAuthAuthorizationServerOptions
+            {
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/api/users/login"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                Provider = new LocalAuthorizationProvider()
+            };
+
+            var authenticationOptions = new OAuthBearerAuthenticationOptions();
+
+            app.UseOAuthAuthorizationServer(authorizationOptions);
+            app.UseOAuthBearerAuthentication(authenticationOptions);
         }
     }
 }

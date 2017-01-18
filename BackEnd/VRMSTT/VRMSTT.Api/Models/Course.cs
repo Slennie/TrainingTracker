@@ -27,6 +27,7 @@ namespace VRMSTT.Api.Models
         public string HostingOrganization { get; set; } //dropdown?
         public string ReimbursingAgency { get; set; } //dropdown?
         public string LabOrLecture { get; set; } //dropdown?
+        
 
         //Navigation Properties
 

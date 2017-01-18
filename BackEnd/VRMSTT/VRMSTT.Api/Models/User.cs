@@ -9,21 +9,22 @@ namespace VRMSTT.Api.Models
     public class User : IdentityUser
     {
         public int DepartmentId { get; set; }
+        public int? PrimaryJobTitleId { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public string Gender { get; set; }
         public string Ethnicity { get; set; }
-        public string JobTitle { get; set; }
         public string Rank { get; set; }
         public string Unit { get; set; }
         public string PrimaryShift { get; set; }
         public string Timezone { get; set; }
         public string DOB { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string TempPreference { get; set; }
         public string SpeedPreference { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         //Navigation Properties
         public virtual ICollection<Certificate> Certificates { get; set; }

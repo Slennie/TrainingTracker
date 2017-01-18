@@ -10,7 +10,7 @@ namespace VRMSTT.Api.Models
         public int NotificationId { get; set; }
         public string UserId { get; set; }
         public string Text { get; set; }
-        public DateTime DateSent { get; set; }
+        public DateTime CreatedDate { get; set; }
         public DateTime? DateSeen { get; set; }
 
         // Relationship Properties(?)

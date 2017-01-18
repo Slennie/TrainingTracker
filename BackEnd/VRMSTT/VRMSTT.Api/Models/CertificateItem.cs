@@ -11,6 +11,7 @@ namespace VRMSTT.Api.Models
         public int? CertificateId { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         //Navigational Properties
 
