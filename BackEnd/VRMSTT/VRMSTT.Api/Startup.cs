@@ -14,6 +14,7 @@ namespace VRMSTT.Api
         {
             var config = new HttpConfiguration();
             WebApiConfig.Register(config);
+            ConfigureOAuth(app);
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
         }

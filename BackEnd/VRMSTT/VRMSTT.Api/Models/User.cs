@@ -20,10 +20,10 @@ namespace VRMSTT.Api.Models
         public string PrimaryShift { get; set; }
         public string Timezone { get; set; }
         public string DOB { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
         public string TempPreference { get; set; }
         public string SpeedPreference { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public DateTime CreatedDate { get; set; }
 
         //Navigation Properties

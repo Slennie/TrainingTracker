@@ -16,10 +16,11 @@ namespace VRMSTT.Api.Providers
 
             var db = new VRMSTTDataContext();
             var store = new UserStore<User>(db);
+            User user = null;
 
             using (var manager = new UserManager<User>(store))
             {
-                var user = manager.Find(context.UserName, context.Password);
+                 user = manager.Find(context.UserName, context.Password);
 
                 if (user == null)
                 {
@@ -28,9 +29,15 @@ namespace VRMSTT.Api.Providers
                 }
             }
 
+            db = new VRMSTTDataContext();
+
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
+            foreach (var role in user.Roles)
+            {
+                identity.AddClaim(new Claim(ClaimTypes.Role, db.Roles.Find(role.RoleId).Name));
+            }
+            
 
             context.Validated(identity);
         }

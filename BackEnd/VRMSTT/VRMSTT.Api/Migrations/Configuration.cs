@@ -1,5 +1,6 @@
 namespace VRMSTT.Api.Migrations
 {
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -14,6 +15,11 @@ namespace VRMSTT.Api.Migrations
 
         protected override void Seed(VRMSTT.Api.Infrastructure.VRMSTTDataContext context)
         {
+            context.Roles.AddOrUpdate(
+                r => r.Name,
+                new IdentityRole { Name = "Admin" },
+                new IdentityRole { Name = "User" }
+                );
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
