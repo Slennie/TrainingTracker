@@ -21,13 +21,12 @@ namespace VRMSTT.Api.Controllers
 
             _userManager = new UserManager<User>(store);
         }
-       
+
         // GET: api/Users
         public IHttpActionResult GetUsers()
         {
             return Ok(db.Users);
         }
-
 
         // GET: api/User/5
         [ResponseType(typeof(User))]
@@ -38,7 +37,7 @@ namespace VRMSTT.Api.Controllers
             {
                 return NotFound();
             }
-            return Ok(new
+            var resultSet = new
             {
                 //IdentityUser
                 User.Id,
@@ -85,7 +84,7 @@ namespace VRMSTT.Api.Controllers
                     e.Course.StartDate,
                     e.Course.EndDate
                 }),
-                Notifcations = User.Notifications.Select(n => new
+                Notifications = User.Notifications.Select(n => new
                 {
                     n.NotificationId,
                     n.Text,
@@ -93,17 +92,18 @@ namespace VRMSTT.Api.Controllers
                     n.DateSeen
                 })
 
-               
-            });
+
+            };
+            return Ok(resultSet);
         }
 
-        // Get Me
+        // GET: api/me
         [Authorize, Route("api/me")]
         public IHttpActionResult GetMe()
         {
             string userName = User.Identity.Name;
             var user = db.Users.FirstOrDefault(u => u.UserName == userName);
-            return Ok(new
+            var resultSet = new
             {
                 //IdentityUser
                 user.Id,
@@ -150,15 +150,32 @@ namespace VRMSTT.Api.Controllers
                     e.Course.StartDate,
                     e.Course.EndDate
                 }),
-                Notifcations = user.Notifications.Select(n => new
+                Notifications = user.Notifications.Select(n => new
                 {
                     n.NotificationId,
                     n.Text,
                     n.CreatedDate,
                     n.DateSeen
                 })
-            });
-                
+            };
+            return Ok(resultSet);
+        }
+
+        // GET: api/me/notifications/unseen
+        [Authorize, Route("api/me/notifications/unseen")]
+        public IHttpActionResult GetMyUnseenNotifications()
+        {
+            var resultSet = db.Notifications
+                              .Where(n => !n.DateSeen.HasValue && n.User.UserName == User.Identity.Name)
+                              .Select(n => new
+                              {
+                                  n.NotificationId,
+                                  n.CreatedDate,
+                                  n.DateSeen,
+                                  n.Text
+                              });
+
+            return Ok(resultSet);
         }
 
         // POST: api/users/register
@@ -188,7 +205,7 @@ namespace VRMSTT.Api.Controllers
             {
                 UserName = registration.EmailAddress,
                 Department = department,
-                CreatedDate =DateTime.Now
+                CreatedDate = DateTime.Now
             };
 
             var result = _userManager.Create(user, registration.Password);
@@ -203,7 +220,7 @@ namespace VRMSTT.Api.Controllers
             }
         }
 
-        // PUT: api/users/5
+        // PUT: api/me
         [ResponseType(typeof(void))]
         public IHttpActionResult PutUser(string id, User user)
         {
@@ -216,31 +233,32 @@ namespace VRMSTT.Api.Controllers
                 return BadRequest();
             }
             // This is how we update stuff
-            var dbUsers = db.Users.Find(id);
 
-            dbUsers.UserName = user.UserName;
-            dbUsers.Email = user.Email;
-            dbUsers.DOB = user.DOB;
-            dbUsers.DepartmentId = user.DepartmentId;
-            dbUsers.FirstName = user.FirstName;
-            dbUsers.MiddleName = user.MiddleName;
-            dbUsers.LastName = user.LastName;
-            dbUsers.Gender = user.Gender;
-            dbUsers.Ethnicity = user.Ethnicity;
-            dbUsers.Rank = user.Rank;
-            dbUsers.Unit = user.Unit;
-            dbUsers.PrimaryShift = user.PrimaryShift;
-            dbUsers.Timezone = user.Timezone;
-            dbUsers.TempPreference = user.TempPreference;
-            dbUsers.SpeedPreference = user.SpeedPreference;
+            var dbUser = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
-            db.Entry(dbUsers).State = System.Data.Entity.EntityState.Modified;
-            
-            
-                db.SaveChanges();
-            
-            return StatusCode(System.Net.HttpStatusCode.NoContent); 
-        
+            dbUser.UserName = user.UserName;
+            dbUser.Email = user.Email;
+            dbUser.DOB = user.DOB;
+            dbUser.DepartmentId = user.DepartmentId;
+            dbUser.FirstName = user.FirstName;
+            dbUser.MiddleName = user.MiddleName;
+            dbUser.LastName = user.LastName;
+            dbUser.Gender = user.Gender;
+            dbUser.Ethnicity = user.Ethnicity;
+            dbUser.Rank = user.Rank;
+            dbUser.Unit = user.Unit;
+            dbUser.PrimaryShift = user.PrimaryShift;
+            dbUser.Timezone = user.Timezone;
+            dbUser.TempPreference = user.TempPreference;
+            dbUser.SpeedPreference = user.SpeedPreference;
+
+            db.Entry(dbUser).State = System.Data.Entity.EntityState.Modified;
+
+
+            db.SaveChanges();
+
+            return StatusCode(System.Net.HttpStatusCode.NoContent);
+
         }
 
         //DELETE: api/User/5
@@ -269,7 +287,7 @@ namespace VRMSTT.Api.Controllers
             certificate.CertificateId = certificateId;
             certificate.UserId = userId;
             db.Certificates.Add(certificate);
-              
+
             db.SaveChanges();
 
             return Ok();

@@ -14,6 +14,7 @@ namespace VRMSTT.Api.Models
         public DateTime CreatedDate { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
+        public DateTime? CertificateExpiration { get; set; }
         public string location { get; set; }
         public bool? PPERequired { get; set; }
         public string MaterialsNeeded { get; set; }
@@ -21,7 +22,6 @@ namespace VRMSTT.Api.Models
         public bool? AvailableOnline { get; set; }
         public string CertificateAwarded { get; set; }
         public int EMSCE { get; set; } //What is this? continuing education analytics Yes/NO?
-        public DateTime? CertificateExpiration { get; set; }
         public string Cost { get; set; }
         public string PaymentOption { get; set; } //dropdown?
         public string HostingOrganization { get; set; } //dropdown?

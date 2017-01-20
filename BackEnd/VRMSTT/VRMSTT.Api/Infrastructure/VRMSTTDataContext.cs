@@ -84,5 +84,7 @@ namespace VRMSTT.Api.Infrastructure
             
             
         }
+
+        public System.Data.Entity.DbSet<VRMSTT.Api.Models.PrimaryJobTitle> PrimaryJobTitles { get; set; }
     }
 }
